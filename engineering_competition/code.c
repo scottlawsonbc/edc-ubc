@@ -20,6 +20,7 @@ int32_t RightDarkThreshold = 0;
 
 /* Motor speed parameters */
 /* Motor functions will limit speeds to these values */
+/* All values below are ABSOLUTE VALUE */
 int32_t MaxMoveSpeed = 0;
 int32_t MaxLiftSpeed = 0;
 int32_t MaxGrabSpeed = 0;
@@ -42,15 +43,17 @@ volatile int32_t LeftAnalogRaw;
 volatile int32_t RightAnalogRaw;
 
 /* Sensor states */
-volatile bool LeftDetectsTape;
-volatile bool RightDetectsTape;
-volatile bool BlockDetected;    /* HIGH = microswitch pressed */
-volatile bool BlockGrabbed;     /* HIGH = microswitch pressed */
+volatile int32_t LeftDetectsTape;
+volatile int32_t RightDetectsTape;
+volatile int32_t BlockDetected;    /* HIGH = microswitch pressed */
+volatile int32_t BlockGrabbed;     /* HIGH = microswitch pressed */
 
 /* Error > 0: Too left */
 /* Error < 0: Too right */
 volatile int32_t CurrentTapeError;
 volatile int32_t PreviousTapeError;
+
+/* Interrupt calls this function to update sensors */
 
 /* Speed control of left and right motors) */
 void LeftSpeed(int32_t speed);
@@ -69,11 +72,11 @@ void Grab(int32_t speed, int32_t duration_ms);
 /* Single increment of tape following at the given speed */
 void TapeFollow(int32_t nominal_speed);
 
-void setup(void) 
-{    
+void code_setup(void) 
+{
 }
 
-void loop(void) 
+void code_loop(void) 
 {
 }
 
@@ -118,13 +121,5 @@ void loop(void)
 // back up
 // left corner --> turn left
 // RL corner --> release block
-
-
-// functions
-void move(uint_32 left, uint_32 right);
-void turn_right(uint_32 left, uint_32 right);
-void turn_left(uint_32 left, uint_32 right);
-void back(uint_32 left, uint_32 right)
-
 
 
